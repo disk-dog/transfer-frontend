@@ -1,4 +1,4 @@
-const endpoint = "https://diskdog.discordid.workers.dev";
+const endpoint = "https://new.disk.dog";
 
 let fileProgress = 0;
 let fileUpload = false;
