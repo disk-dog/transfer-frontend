@@ -84,10 +84,9 @@ async function handleUpload() {
             parts: chunks.length
         },
         headers: {'content-type': 'application/json'}
-    }).then(res => res.text())
+    }).then(res => res.json())
+    if(!reponse) return alert("something fatal failed!!!")
     console.log(response)
-
-    response = {"statusCode":200,"code":"Yk2036","urls":["https://diskdogbeta.s3.us-west-1.amazonaws.com/adb410cd-7756-4cb2-9507-5ea8e0594255/sus.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAYLOKZKO5MPHA4PXD%2F20211114%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Date=20211114T205419Z&X-Amz-Expires=900&X-Amz-Signature=6fdb99751665fbf2eb1ebde057fa7a4833927dba856a31c3012729dbc2745848&X-Amz-SignedHeaders=host&partNumber=1&uploadId=eP4cg4AcHoobVF1kW6WEtGoHC.uM6ceuSjibd2pMGdy7EqnNHsjAzOaJBD.VC8Rp2jrCE7G_OC1TRZ395a3VC2gs4MfjEMelJewukv6DWpuIWOzFKEvoW6WWkkbr_aGz&x-id=UploadPart","https://diskdogbeta.s3.us-west-1.amazonaws.com/adb410cd-7756-4cb2-9507-5ea8e0594255/sus.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAYLOKZKO5MPHA4PXD%2F20211114%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Date=20211114T205419Z&X-Amz-Expires=900&X-Amz-Signature=dc5339e28be91dab847895c6d404e24364723bd8b508e2f04214f74ea8aa7666&X-Amz-SignedHeaders=host&partNumber=2&uploadId=eP4cg4AcHoobVF1kW6WEtGoHC.uM6ceuSjibd2pMGdy7EqnNHsjAzOaJBD.VC8Rp2jrCE7G_OC1TRZ395a3VC2gs4MfjEMelJewukv6DWpuIWOzFKEvoW6WWkkbr_aGz&x-id=UploadPart","https://diskdogbeta.s3.us-west-1.amazonaws.com/adb410cd-7756-4cb2-9507-5ea8e0594255/sus.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAYLOKZKO5MPHA4PXD%2F20211114%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Date=20211114T205419Z&X-Amz-Expires=900&X-Amz-Signature=5159cb07c551ffb456b9bc4a4329fe0dbdab3053fce82d300f82af74919807f1&X-Amz-SignedHeaders=host&partNumber=3&uploadId=eP4cg4AcHoobVF1kW6WEtGoHC.uM6ceuSjibd2pMGdy7EqnNHsjAzOaJBD.VC8Rp2jrCE7G_OC1TRZ395a3VC2gs4MfjEMelJewukv6DWpuIWOzFKEvoW6WWkkbr_aGz&x-id=UploadPart"]};
 
     const id = response.code
     const urls = response.urls
