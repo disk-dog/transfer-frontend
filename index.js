@@ -80,7 +80,7 @@ async function handleUpload() {
         type: file.type,
         parts: chunks.length
     }).then(res => res.data)
-    if(!reponse) return alert("something fatal failed!!!")
+    if(!response) return alert("something fatal failed!!!")
     console.log(response)
 
     const id = response.code
