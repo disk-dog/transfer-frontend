@@ -1,4 +1,4 @@
-const endpoint = "https://new.disk.dog";
+const endpoint = "/api";
 
 let fileProgress = 0;
 let fileUpload = false;
@@ -111,7 +111,14 @@ async function handleUpload() {
 
     await Promise.all(promises)
 
-    var response = await axios({method: 'PATCH', url: `https://flaredrop.net/drops/${id}`})
+    await fetch(`${endpoint}/completeFile`, {
+        method: "post",
+        mode: "no-cors",
+        body: {
+            code: id
+        },
+        headers: {'content-type': 'application/json'}
+    })
 
     clearInterval(monitor)
     document.getElementById('uploadButton').disabled = false
