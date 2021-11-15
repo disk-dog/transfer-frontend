@@ -75,16 +75,11 @@ async function handleUpload() {
         return alert('Max filesize is 50 GiB!')
     }
 
-    var response = await fetch(`${endpoint}/createFile`, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: {
-            name: file.name,
-            type: file.type,
-            parts: chunks.length
-        },
-        headers: {'content-type': 'application/json'}
-    }).then(res => res.json())
+    var response = await axios.post(`${endpoint}/createFile`, {
+        name: file.name,
+        type: file.type,
+        parts: chunks.length
+    }).then(res => res.data)
     if(!reponse) return alert("something fatal failed!!!")
     console.log(response)
 
@@ -111,13 +106,8 @@ async function handleUpload() {
 
     await Promise.all(promises)
 
-    await fetch(`${endpoint}/completeFile`, {
-        method: "post",
-        mode: "no-cors",
-        body: {
-            code: id
-        },
-        headers: {'content-type': 'application/json'}
+    await axios.post(`${endpoint}/completeFile`, {
+        code: id
     })
 
     clearInterval(monitor)
