@@ -55,7 +55,7 @@ async function uploadChunk(url, chunk) {
             fileProgress += progressEvent.loaded - chunkProgress
             chunkProgress += progressEvent.loaded - chunkProgress
         }
-    }).then(console.log).catch(() => console.log("error"))
+    }).then(console.log).then(x => console.log("Chunk uploaded successfully.")).catch(console.error)
 }
 
 async function handleUpload() {
