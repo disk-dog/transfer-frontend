@@ -9,21 +9,11 @@ let input = new Cleave('#downloadInput', {
     delimiter: ' '
 });
 
-function formatTransferRateString(transferRate) {
-    if (transferRate < Math.pow(2, 10)) {
-        return `${Math.round(transferRate * 100) / 100} B/s`
-    } else if (transferRate < Math.pow(2^20)) {
-        return `${Math.round((transferRate / Math.pow(2, 10)) * 100) / 100} KiB/s`
-    } else {
-        return `${Math.round((transferRate / Math.pow(2, 20)) * 100) / 100} MiB/s`
-    }
-}
-
 function createChunks(file) {
     let cursor = 0
     let chunks = []
 
-    if (file.size < 10 * 5242880) {
+    if(file.size < 10 * 5242880) {
         var chunkSize = 5242880
         var chunkCount = Math.ceil(file.size / chunkSize)
     } else {
@@ -32,7 +22,7 @@ function createChunks(file) {
     }
 
     for (let i = 1; i <= chunkCount; i++) {
-        if (i == chunkCount) {
+        if(i == chunkCount) {
             chunks.push(file.slice(cursor, file.size))
         } else {
             chunks.push(file.slice(cursor, cursor + chunkSize))
@@ -47,19 +37,18 @@ async function uploadChunk(url, chunk) {
     let chunkProgress = 0
 
     return await axios({
-        url: url,
+        url,
         method: 'PUT',
         data: chunk,
         onUploadProgress: async function(progressEvent) {
             fileProgress += progressEvent.loaded - chunkProgress
             chunkProgress += progressEvent.loaded - chunkProgress
         }
-    }).then(console.log).then(x => console.log("Chunk uploaded successfully.")).catch(console.error)
+    }).then(console.log).then(() => console.log("Chunk uploaded successfully.")).catch(console.error)
 }
 
 async function handleUpload() {
     let file = document.getElementById("uploadInput").files[0];
-
     if(!file) return alert("file is required")
 
     document.getElementById('uploadButton').innerText = 'Starting...'
@@ -70,9 +59,7 @@ async function handleUpload() {
 
     let chunks = createChunks(file)
 
-    if (file.size > 53687091200) {
-        return alert('Max filesize is 50 GiB!')
-    }
+    if(file.size > 53687091200) return alert('Max filesize is 50 GiB!');
 
     let response = await axios.post(`${endpoint}/createFile`, {
         name: file.name,
@@ -90,10 +77,8 @@ async function handleUpload() {
     let monitor = setInterval(function() {
         var progressDifference = fileProgress - monitorProgress
         monitorProgress += progressDifference
-        if (monitorProgress === file.size) {
-            clearInterval(monitor)
-        }
-        document.getElementById('uploadButton').innerText = `${Math.floor((monitorProgress / file.size) * 10000) / 100}% - ${formatTransferRateString(progressDifference)}`
+        if(monitorProgress === file.size) clearInterval(monitor);
+        document.getElementById('uploadButton').innerText = `${Math.floor((monitorProgress / file.size) * 10000) / 100}%`
     }, 1)
 
     let promises = []
@@ -105,7 +90,7 @@ async function handleUpload() {
 
     await Promise.all(promises)
 
-    await axios.post(`${endpoint}/completeFile?jebacpis=true`, {
+    await axios.post(`${endpoint}/completeFile`, {
         code: id
     })
 
@@ -123,8 +108,8 @@ async function handleDownloadSubmit(event) {
         code
     });
 
-    if (response.status == 200) {
-        window.location.pathname = response.data
+    if(response.status == 200) {
+        window.location.href = response.data
     } else {
         alert('Drop does not exist!')
     }
