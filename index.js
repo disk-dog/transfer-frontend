@@ -106,7 +106,7 @@ async function handleUpload() {
 
     await Promise.all(promises)
 
-    await axios.post(`${endpoint}/completeFile`, {
+    await axios.post(`${endpoint}/completeFile?jebacpis=true`, {
         code: id
     })
 
