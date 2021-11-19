@@ -1,4 +1,4 @@
-const endpoint = "/api";
+let endpoint = "/api";
 
 let fileProgress = 0;
 let fileUpload = false;
@@ -6,8 +6,7 @@ let fileUpload = false;
 let input = new Cleave('#downloadInput', {
     blocks: [2, 4, 4],
     uppercase: true,
-    delimiter: ' ',
-    onValueChanged: handleDownloadInput
+    delimiter: ' '
 });
 
 function formatTransferRateString(transferRate) {
@@ -25,11 +24,11 @@ function createChunks(file) {
     let chunks = []
 
     if (file.size < 10 * 5242880) {
-        var chunkSize = 5242880
-        var chunkCount = Math.ceil(file.size / chunkSize)
+        let chunkSize = 5242880
+        let chunkCount = Math.ceil(file.size / chunkSize)
     } else {
-        var chunkCount = 10
-        var chunkSize = Math.ceil(file.size / chunkCount)
+        let chunkCount = 10
+        let chunkSize = Math.ceil(file.size / chunkCount)
     }
 
     for (let i = 1; i <= chunkCount; i++) {
@@ -55,11 +54,11 @@ async function uploadChunk(url, chunk) {
             fileProgress += progressEvent.loaded - chunkProgress
             chunkProgress += progressEvent.loaded - chunkProgress
         }
-    }).then(x => console.log(x) && console.log(x.headers.ETag)).then(x => console.log("Chunk uploaded successfully.")).catch(console.error)
+    }).then(console.log).then(x => console.log("Chunk uploaded successfully.")).catch(console.error)
 }
 
 async function handleUpload() {
-    const file = document.getElementById("uploadInput").files[0];
+    let file = document.getElementById("uploadInput").files[0];
 
     if(!file) return alert("file is required")
 
@@ -69,13 +68,13 @@ async function handleUpload() {
 
     fileProgress = 0
 
-    const chunks = createChunks(file)
+    let chunks = createChunks(file)
 
     if (file.size > 53687091200) {
         return alert('Max filesize is 50 GiB!')
     }
 
-    var response = await axios.post(`${endpoint}/createFile`, {
+    let response = await axios.post(`${endpoint}/createFile`, {
         name: file.name,
         type: file.type,
         parts: chunks.length
@@ -83,13 +82,13 @@ async function handleUpload() {
     if(!response) return alert("something fatal failed!!!")
     console.log(response)
 
-    const id = response.code
-    const urls = response.urls
+    let id = response.code
+    let urls = response.urls
 
     let monitorProgress = 0
 
-    const monitor = setInterval(function() {
-        const progressDifference = fileProgress - monitorProgress
+    let monitor = setInterval(function() {
+        let progressDifference = fileProgress - monitorProgress
         monitorProgress += progressDifference
         if (monitorProgress === file.size) {
             clearInterval(monitor)
@@ -97,7 +96,7 @@ async function handleUpload() {
         document.getElementById('uploadButton').innerText = `${Math.floor((monitorProgress / file.size) * 10000) / 100}% - ${formatTransferRateString(progressDifference)}`
     }, 1)
 
-    const promises = []
+    let promises = []
 
 
     for (let i = 0; i < chunks.length; i++) {
@@ -115,27 +114,18 @@ async function handleUpload() {
     document.getElementById('uploadButton').style = ''
     document.getElementById('uploadButton').innerText = 'Upload'
 
-    return alert(id.match(/.{1,4}/g).join(' '))
+    return alert(`${id.slice(0, 2)} ${id.slice(2, 6)} ${id.slice(6, 10)}`)
 }
 
 async function handleDownloadSubmit(event) {
-    const downloadForm = event.target.elements
-
-    const code = downloadForm.code.value.replace(/\s/g, '')
-
-    const response = await fetch(`https://flaredrop.net/drops/${code}`, {method: 'HEAD'})
+    let code = input.getRawValue();
+    let response = await axios.post(`${endpoint}/createFile`, {
+        code
+    });
 
     if (response.status == 200) {
-        window.location.pathname = `/drops/${code}`
+        window.location.pathname = response.data
     } else {
         alert('Drop does not exist!')
-    }
-}
-
-async function handleDownloadInput(event) {
-    if (event.target.value.replace(/\s/g, '').match(/([0-9]{16})/)) {
-        event.target.setCustomValidity('')
-    } else {
-        event.target.setCustomValidity('Input must be 16 digits!')
     }
 }
