@@ -24,11 +24,11 @@ function createChunks(file) {
     let chunks = []
 
     if (file.size < 10 * 5242880) {
-        let chunkSize = 5242880
-        let chunkCount = Math.ceil(file.size / chunkSize)
+        var chunkSize = 5242880
+        var chunkCount = Math.ceil(file.size / chunkSize)
     } else {
-        let chunkCount = 10
-        let chunkSize = Math.ceil(file.size / chunkCount)
+        var chunkCount = 10
+        var chunkSize = Math.ceil(file.size / chunkCount)
     }
 
     for (let i = 1; i <= chunkCount; i++) {
@@ -88,7 +88,7 @@ async function handleUpload() {
     let monitorProgress = 0
 
     let monitor = setInterval(function() {
-        let progressDifference = fileProgress - monitorProgress
+        var progressDifference = fileProgress - monitorProgress
         monitorProgress += progressDifference
         if (monitorProgress === file.size) {
             clearInterval(monitor)
