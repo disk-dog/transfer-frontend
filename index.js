@@ -119,7 +119,7 @@ async function handleUpload() {
 
 async function handleDownloadSubmit(event) {
     let code = input.getRawValue();
-    let response = await axios.post(`${endpoint}/createFile`, {
+    let response = await axios.post(`${endpoint}/download`, {
         code
     });
 
