@@ -2,6 +2,7 @@ let endpoint = "/api";
 
 let fileProgress = 0;
 let fileUpload = false;
+let cancelButton = document.getElementById("cancel");
 
 let input = new Cleave('#downloadInput', {
     blocks: [2, 4, 4],
@@ -40,7 +41,7 @@ async function uploadChunk(url, chunk) {
         url,
         method: 'PUT',
         data: chunk,
-        onUploadProgress: async function(progressEvent) {
+        onUploadProgress: async(progressEvent) => {
             fileProgress += progressEvent.loaded - chunkProgress
             chunkProgress += progressEvent.loaded - chunkProgress
         }
@@ -68,6 +69,8 @@ async function handleUpload() {
     }).then(res => res.data)
     if(!response) return alert("something fatal failed!!!")
     console.log(response)
+
+    cancelButton.disabled = false;
 
     let id = response.code
     let urls = response.urls
@@ -98,19 +101,26 @@ async function handleUpload() {
     document.getElementById('uploadButton').disabled = false
     document.getElementById('uploadButton').style = ''
     document.getElementById('uploadButton').innerText = 'Upload'
+    cancelButton.disabled = true;
 
     return alert(`${id.slice(0, 2)} ${id.slice(2, 6)} ${id.slice(6, 10)}`)
 }
 
 async function handleDownloadSubmit(event) {
     let code = input.getRawValue();
-    let response = await axios.post(`${endpoint}/download`, {
-        code
-    });
+    let response = await axios.get(`/download?code=${code}`);
 
-    if(response.status == 200) {
-        window.location.href = response.data
-    } else {
+    if(response.status === 200) {
+        window.location.href = `/download?code=${code}`
+    } else if(response.status === 404) {
         alert('Drop does not exist!')
+    } else if(response.status === 401) {
+        let pass = confirm("This file requires password, please provide it below and press enter.");
+        response = await axios.get(`/download?code=${code}&password=${pass}`);
+        if(response.status === 401) return alert("Invalid password provided.")
     }
+}
+
+cancelButton.onclick = () => {
+
 }
