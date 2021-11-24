@@ -116,7 +116,7 @@ async function handleDownloadSubmit(event) {
     } else if(response === 404) {
         alert('Drop does not exist!')
     } else if(response === 401) {
-        let pass = confirm("This file requires password, please provide it below and press enter.");
+        let pass = prompt("This file requires password, please provide it below and press enter.");
         response = await axios.get(`/download?code=${code}&password=${pass}`).then(x => x.status).catch(e => e.response.status);
         if(response === 401) return alert("Invalid password provided.");
         window.location.href = `/download?code=${code}&password=${pass}`;
