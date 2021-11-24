@@ -109,16 +109,17 @@ async function handleUpload() {
 
 async function handleDownloadSubmit(event) {
     let code = input.getRawValue();
-    let response = await axios.get(`/download?code=${code}`);
+    let response = await axios.get(`/download?code=${code}`).then(x => x.status).catch(e => e.response.status);
 
-    if(response.status === 200) {
+    if(response === 200) {
         window.location.href = `/download?code=${code}`
-    } else if(response.status === 404) {
+    } else if(response === 404) {
         alert('Drop does not exist!')
-    } else if(response.status === 401) {
+    } else if(response === 401) {
         let pass = confirm("This file requires password, please provide it below and press enter.");
-        response = await axios.get(`/download?code=${code}&password=${pass}`);
-        if(response.status === 401) return alert("Invalid password provided.")
+        response = await axios.get(`/download?code=${code}&password=${pass}`).then(x => x.status).catch(e => e.response.status);
+        if(response === 401) return alert("Invalid password provided.");
+        window.location.href = `/download?code=${code}&password=${pass}`;
     }
 }
 
