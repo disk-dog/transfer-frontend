@@ -3,6 +3,7 @@ let endpoint = "/api";
 let fileProgress = 0;
 let fileUpload = false;
 let cancelButton = document.getElementById("cancel");
+let id;
 
 let input = new Cleave('#downloadInput', {
     blocks: [2, 4, 4],
@@ -64,7 +65,7 @@ async function handleUpload() {
 
     let response = await axios.post(`${endpoint}/createFile`, {
         name: file.name,
-        type: file.type,
+        password: document.getElementById("passwd").value || null,
         parts: chunks.length
     }).then(res => res.data)
     if(!response) return alert("something fatal failed!!!")
@@ -72,7 +73,7 @@ async function handleUpload() {
 
     cancelButton.disabled = false;
 
-    let id = response.code
+    id = response.code
     let urls = response.urls
 
     let monitorProgress = 0
@@ -121,6 +122,9 @@ async function handleDownloadSubmit(event) {
     }
 }
 
-cancelButton.onclick = () => {
-
+cancelButton.onclick = async() => {
+    await axios.post(`${endpoint}/abortFile`, {
+        code: id
+    });
+    window.location.reload();
 }
