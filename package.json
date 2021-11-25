@@ -7,7 +7,7 @@
     "build": "npx postcss src/css/compile.css -o src/css/styles.css"
   },
   "author": "disk.dog",
-  "license": "Apache-2.0",
+  "license": "AGPL-3.0-only",
   "devDependencies": {
     "autoprefixer": "^10.4.0",
     "postcss": "^8.3.11",
