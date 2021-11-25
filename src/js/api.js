@@ -57,7 +57,7 @@ async function handleUpload(file) {
         password: $("#password_field").val() || null,
         parts: chunks.length
     }).then(res => res.data).catch(e => e.response)
-    if(!response.code) return error(`Error ${response.status}`);
+    if(!response.code) return error(`Error ${response.status} ${response.message}`);
     console.log(response)
 
     id = response.code;
