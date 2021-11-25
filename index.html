@@ -46,7 +46,7 @@
     <!--center stuff-->
     <div class="m-auto text-center rounded-lg z-30">
         <div class="bg-gray-800 p-3 m-auto rounded-lg">
-            <div id="main" class="">
+            <div id="main">
                 <input type="file" id="uploader" class="hidden">
                 <button onclick="$('#uploader').click();" class="bg-gray-800 hover:bg-gray-900 border-gray-900 border-2 w-96 h-72 text-center rounded-lg">click here to upload</button>
             </div>
@@ -73,9 +73,15 @@
                         <button id="upload_button" class="px-4 py-2 bg-gray-600 text-white text-base font-medium rounded-md w-full shadow-sm hover:border-2 hover:border-gray-900 hover:bg-gray-500 focus:bg-gray-900 focus:outline-none">
                             Upload
                         </button>
-                        <button>Cancel</button>
+                        <button id="cancel_button">Cancel</button>
                     </div>
                 </div>
+            </div>
+            <div class="hidden" id="uploading_screen">
+                <!-- dać upload screena -->
+            </div>
+            <div class="hidden" id="done_screen">
+                <!-- dać done screena -->
             </div>
         </div>
         <!-- center stuff -->
@@ -85,6 +91,7 @@
             <a href="/terms" class="text-blue-200">Terms of Service</a> | <a href="/privacy" class="text-blue-200">Privacy Policy</a> | <a href="/about" class="text-blue-200">About</a>
         </div>
         <!-- footer -->
+        <script src="./src/js/api.js"></script>
         <script>
             let settings_things = document.getElementById("input_div").querySelectorAll(".input_thing");
 
@@ -151,6 +158,11 @@
             $("#uploader").change(() => confirmation_prompt());
 
             $("#upload_button").focus(() => {
+                let file = $("#uploader").get(0).files[0];
+                handleUpload(file);
+            })
+
+            $("#cancel_button").focus(() => {
                 $("#uploader").val([]);
                 $("#upload_screen").addClass("hidden");
                 $("#main").removeClass("hidden");
@@ -173,7 +185,6 @@
                 event.stopPropagation();
             }
         </script>
-        <script src="./src/js/api.js"></script>
 </body>
 
 </html>
