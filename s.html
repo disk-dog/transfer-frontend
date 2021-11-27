@@ -39,7 +39,8 @@
     <!-- top stuff -->
     <div class="z-30">
         <a href="/"><img class="absolute w-auto h-20 ml-4 " src="./src/images/logo.png" alt="logo"></a>
-        <a class="absolute inset-y-0 right-3 p-4 max-h-16" href="https://discord.gg/DmSvkjMhqv" title="Join Discord"><i class="fa-brands fa-discord text-2xl"></i></a>
+        <a class="absolute inset-y-0 right-3 p-4 max-h-16" href="https://discord.gg/DmSvkjMhqv" title="Join Discord"><i
+                class="fa-brands fa-discord text-2xl"></i></a>
     </div>
     <!-- top stuff -->
 
@@ -48,7 +49,8 @@
         <div class="bg-gray-800 p-3 m-auto rounded-lg">
             <div id="main">
                 <input type="file" id="uploader" class="hidden" multiple>
-                <button onclick="document.getElementById('uploader').click();" class="bg-gray-800 hover:bg-gray-900 border-gray-900 border-2 w-96 h-72 text-center rounded-lg">
+                <button onclick="document.getElementById('uploader').click();"
+                    class="bg-gray-800 hover:bg-gray-900 border-gray-900 border-2 w-96 h-72 text-center rounded-lg">
                     <i class="fa-solid fa-upload text-4xl"></i>
                     <p>Drop files here or click to upload.</p>
                 </button>
@@ -62,27 +64,23 @@
                             <p id="file_name" class="text-xl"></p>
                             <p id="file_size" class="text-sm text-gray-300"></p>
                         </div>
-                        <!-- <div class="flex flex-row">
-                             <div>
-                             <p class="px-2 py-2">password:</p>
-                             <input type="password" placeholder="*optional*" id="password_field" class="bg-gray-900 text-center rounded-lg input_thing w-44">
-                             </div> -->
-                            <!-- <button id="show_password" class="p-3 rounded-lg active:bg-gray-900 hover:bg-gray-500"><i id="show_password_text" class="fas fa-eye"></i></button> -->
-                        <!-- <div>
-                             <p class="px-2 py-2">duration:</p>
-                             <select id="duration_selector" class="bg-gray-900 text-center rounded-lg input_thing w-44"></select>
-                             </div> -->
-                            <!-- <p class="px-2 py-2">region:</p>
-                                 <select id="region_selector" class="bg-gray-900 text-center rounded-lg input_thing w-44">
-                                 <option value="au">Australia</option>
-                                 <option value="eu">Europe</option>
-                                 <option value="us">USA</option>
-                                 </select> -->
-                        <!-- </div> -->
+                        <div class="flex flex-row">
+                            <div>
+                                <p class="px-2 py-2">password:</p>
+                                <input type="password" placeholder="*optional*" id="password_field" class="bg-gray-900 text-center rounded-lg input_thing w-44">
+                            </div>
+                            <!-- <button id="show_password" class="p-3 rounded-lg active:bg-gray-900 hover:bg-gray-500"><i id="show_password_text" class="fas fa-eye"></i></button> 
+                            <div>
+                                <p class="px-2 py-2">duration:</p>
+                                <select id="duration_selector" class="bg-gray-900 text-center rounded-lg input_thing w-44"></select>
+                            </div>-->
+                        </div>
                         <p class="invisible w-52 h-4"></p>
                         <div class="flex flex-row absolute bottom-0 right-0">
-                            <button id="cancel_button" class="px-4 py-2 hover:bg-gray-700 rounded-lg">Cancel</button>&nbsp;
-                            <button id="upload_button" class="px-4 py-2 bg-gray-600 text-white text-base font-medium rounded-lg shadow-sm hover:border-2 hover:border-gray-900 hover:bg-gray-500 focus:bg-gray-900 focus:outline-none">Upload</button>
+                            <button id="cancel_button"
+                                class="px-4 py-2 hover:bg-gray-700 rounded-lg">Cancel</button>&nbsp;
+                            <button id="upload_button"
+                                class="px-4 py-2 bg-gray-600 text-white text-base font-medium rounded-lg shadow-sm hover:border-2 hover:border-gray-900 hover:bg-gray-500 focus:bg-gray-900 focus:outline-none">Upload</button>
                         </div>
                     </div>
                 </div>
@@ -108,7 +106,8 @@
                     </p>
                 </div>
                 <div class="items-center px-4 py-3">
-                    <button id="ok-btn" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                    <button id="ok-btn"
+                        class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
                         OK
                     </button>
                 </div>
@@ -118,7 +117,9 @@
 
         <!-- footer -->
         <div class="text-center bottom-3 inset-x-0 absolute z-40">
-            <a href="/terms" class="text-blue-200">Terms of Service</a> | <a href="/privacy" class="text-blue-200">Privacy Policy</a> | <a href="https://github.com/disk-dog" class="text-blue-200">GitHub</a>
+            <a href="/terms" class="text-blue-200">Terms of Service</a> | <a href="/privacy"
+                class="text-blue-200">Privacy Policy</a> | <a href="https://github.com/disk-dog"
+                class="text-blue-200">GitHub</a>
         </div>
         <!-- footer -->
         <script src="./src/js/api.js"></script>
@@ -129,8 +130,8 @@
                 settings_things[0].value = localStorage.getItem('password');
             if (localStorage.getItem('duration'))
                 settings_things[1].value = localStorage.getItem('duration');
-         // if (localStorage.getItem('region'))
-         //     settings_things[2].value = localStorage.getItem('region');
+            // if (localStorage.getItem('region'))
+            //     settings_things[2].value = localStorage.getItem('region');
 
             $("#show_password").mousedown(function () {
                 $(this).prev().prop('type', 'text');
@@ -148,7 +149,7 @@
 
                 $("#upload_screen").removeClass("hidden");
                 $("#main").addClass("hidden");
-                
+
                 let file_size = _file.size;
                 if (file_size < 1000) file_size = `${file_size}B`;
                 else if (file_size < 1000000) file_size = `${Number(file_size / 1000).toFixed(2)}KB`;
@@ -157,12 +158,12 @@
                 $("#file_size").text(file_size);
 
                 let allowed = [];
-                if(_file.size < 1_000_000_000) allowed = ["3600", "7200", "21600", "43200", "86400", "172800"];
-                else if(_file.size < 5_000_000_000) allowed = ["3600", "7200", "21600", "43200", "86400"];
-                else if(_file.size < 10_000_000_000) allowed = ["3600", "7200", "21600", "43200"];
-                else if(_file.size < 20_000_000_000) allowed = [ "3600", "7200", "21600"];
-                else if(_file.size < 50_000_000_000) allowed = [ "3600", "7200"];
-                else allowed = [ "3600"];
+                if (_file.size < 1_000_000_000) allowed = ["3600", "7200", "21600", "43200", "86400", "172800"];
+                else if (_file.size < 5_000_000_000) allowed = ["3600", "7200", "21600", "43200", "86400"];
+                else if (_file.size < 10_000_000_000) allowed = ["3600", "7200", "21600", "43200"];
+                else if (_file.size < 20_000_000_000) allowed = ["3600", "7200", "21600"];
+                else if (_file.size < 50_000_000_000) allowed = ["3600", "7200"];
+                else allowed = ["3600"];
 
                 $("#duration_selector").html(`
                     <option value="3600" ${allowed.includes("3600") ? "" : "disabled"}>1 hour</option>
