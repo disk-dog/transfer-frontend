@@ -57,7 +57,7 @@ async function handleUpload(file) {
         password: $("#password_field").val() || null,
         parts: chunks.length
     }).then(res => res.data).catch(e => e.response)
-    if(!response.code) return error(`Error ${response.status} ${response.message}`);
+    if(!response.code) return error(`Error ${response.status}.`);
     console.log(response)
 
     id = response.code;
@@ -69,7 +69,7 @@ async function handleUpload(file) {
         var progressDifference = fileProgress - monitorProgress
         monitorProgress += progressDifference
         if(monitorProgress === file.size) clearInterval(monitor);
-        $("#upload_progress").html(`${Math.floor((monitorProgress / file.size) * 10000) / 100}%`);
+        $("#upload_progress").html(Math.floor((monitorProgress / file.size) * 10000) / 100);
     }, 1);
 
     let promises = [];
@@ -86,9 +86,25 @@ async function handleUpload(file) {
     $("#done_screen").removeClass("hidden");
     $("#uploading_screen").addClass("hidden");
 
-    $("#done_input").val(`https://disk.dog/download/${id}`);
+    $("#done_input").val(`${id.slice(0, 2)} ${id.slice(2, 6)} ${id.slice(6, 10)}`);
 }
 
 function error(message) {
     alert(message);
+}
+
+async function handleDownloadSubmit() {
+    let code = prompt("Enter the code of the file you want to download.").replace(/\s/g, "");
+    let response = await axios.get(`/download?code=${code}`).then(x => x.status).catch(e => e.response.status);
+
+    if(response === 200) {
+        window.location.href = `/download?code=${code}`
+    } else if(response === 404) {
+        alert('Drop does not exist!')
+    } else if(response === 401) {
+        let pass = prompt("This file requires password, please provide it below and press enter.");
+        response = await axios.get(`/download?code=${code}&password=${pass}`).then(x => x.status).catch(e => e.response.status);
+        if(response === 401) return alert("Invalid password provided.");
+        window.location.href = `/download?code=${code}&password=${pass}`;
+    }
 }
