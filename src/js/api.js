@@ -55,7 +55,8 @@ async function handleUpload(file) {
     let response = await axios.post(`${endpoint}/createFile`, {
         name: file.name,
         password: $("#password_field").val() || null,
-        parts: chunks.length
+        parts: chunks.length,
+        expire: $("#duration_selector").val() || null
     }).then(res => res.data).catch(e => e.response)
     if(!response.code) return error(`Error ${response.status}.`);
     console.log(response)
