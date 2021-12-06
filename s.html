@@ -1,23 +1,4 @@
 <!DOCTYPE html>
-<!--
-    disk.dog is a big file transfer service
-    Copyright (C) 2021 DomeQdev
-    Copyright (C) 2021 AKurushimi
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
-
 <html lang="en" ondragover="onDragEnter(event)" ondrop="onDrop(event)" ondragend="onDragEnd(event)">
 
 <head>
@@ -100,93 +81,7 @@
             <a href="/terms" class="text-blue-200">Terms of Service</a> | <a href="/privacy" class="text-blue-200">Privacy Policy</a> | <a href="https://github.com/disk-dog" class="text-blue-200">GitHub</a>
         </div>
         <!-- footer -->
-        <script src="./src/js/api.js?"></script>
-        <script>
-            let settings_things = document.getElementById("input_div").querySelectorAll(".input_thing");
-
-            $("#show_password").mousedown(function () {
-                $(this).prev().prop('type', 'text');
-                $("#show_password_text").removeClass("fa-eye").addClass("fa-eye-slash");
-            }).mouseup(function () {
-                $(this).prev().prop('type', 'password');
-                $("#show_password_text").removeClass("fa-eye-slash").addClass("fa-eye");
-            }).mouseout(function () {
-                $(this).prev().prop('type', 'password');
-                $("#show_password_text").removeClass("fa-eye-slash").addClass("fa-eye");
-            });
-
-            function confirmation_prompt() {
-                let _file = $("#uploader").get(0).files[0];
-
-                $("#upload_screen").removeClass("hidden");
-                $("#main").addClass("hidden");
-
-                let file_size = _file.size;
-                if (file_size < 1000) file_size = `${file_size}B`;
-                else if (file_size < 1000000) file_size = `${Number(file_size / 1000).toFixed(2)}KB`;
-                else if (file_size < 1000000000) file_size = `${Number(file_size / 1000000).toFixed(2)}MB`;
-                else file_size = `${Number(file_size / 1000000000).toFixed(2)}GB`;
-                $("#file_size").text(file_size);
-
-                let allowed = [];
-                if (_file.size < 1_000_000_000) allowed = ["3600", "7200", "21600", "43200", "86400", "172800"];
-                else if (_file.size < 5_000_000_000) allowed = ["3600", "7200", "21600", "43200", "86400"];
-                else if (_file.size < 10_000_000_000) allowed = ["3600", "7200", "21600", "43200"];
-                else if (_file.size < 20_000_000_000) allowed = ["3600", "7200", "21600"];
-                else if (_file.size < 50_000_000_000) allowed = ["3600", "7200"];
-                else allowed = ["3600"];
-
-                $("#duration_selector").html(`
-                    <option value="172800" ${allowed.includes("172800") ? "" : "disabled"}>2 days</option>
-                    <option value="86400" ${allowed.includes("86400") ? "" : "disabled"}>1 day</option>
-                    <option value="43200" ${allowed.includes("43200") ? "" : "disabled"}>12 hours</option>
-                    <option value="21600" ${allowed.includes("21600") ? "" : "disabled"}>6 hours</option>
-                    <option value="7200" ${allowed.includes("7200") ? "" : "disabled"}>2 hours</option>
-                    <option value="3600" ${allowed.includes("3600") ? "" : "disabled"}>1 hour</option>
-                `);
-
-                $("#file_icon").removeClass().addClass("fa-solid");
-                $("#file_name").text(_file.name);
-                let file_extension = _file.name.split(".")
-                file_extension = file_extension[file_extension.length - 1]
-                let file_type = _file.type
-                if (file_type.includes("image")) $("#file_icon").addClass("fa-file-image");
-                else if (file_type.includes("audio")) $("#file_icon").addClass("fa-file-audio");
-                else if (file_type.includes("video")) $("#file_icon").addClass("fa-file-video");
-                else if (file_type.includes("text")) $("#file_icon").addClass("fa-file-lines");
-                else $("#file_icon").addClass("fa-file");
-            };
-
-            $("#uploader").change(() => confirmation_prompt());
-
-            $("#upload_button").focus(() => {
-                let file = $("#uploader").get(0).files[0];
-                handleUpload(file);
-            })
-
-            $("#cancel_button").focus(() => {
-                $("#uploader").val([]);
-                $("#upload_screen").addClass("hidden");
-                $("#main").removeClass("hidden");
-            });
-
-            function onDrop(event) {
-                event.preventDefault();
-                let files = event.dataTransfer.files;
-                $("#uploader").get(0).files = files;
-                confirmation_prompt();
-            }
-
-            function onDragEnter(event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-
-            function onDragEnd(event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-        </script>
+        
 </body>
 
 </html>
