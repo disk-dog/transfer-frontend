@@ -15,24 +15,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script>
     <link rel="stylesheet" href="/assets/style.css">
-    <style>
-        #wallpaper-frame {
-            background: transparent;
-            border: 0;
-            transition: transform .5s cubic-bezier(.77,0,.175,1);
-            height: 100%;
-            left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    -webkit-tap-highlight-color: transparent;
-    box-sizing: border-box;
-        }
-    </style>
 </head>
 
 <body class="bg-gray-900 flex h-screen text-gray-200">
-    <iframe allow="autoplay; camera" class="z-0 hidden md:block" frameborder="0" scrolling="no" src="https://dq.ct8.pl/ad.html" title="wallpaper-frame" id="wallpaper-frame"></iframe>
+    <iframe allow="autoplay; camera" class="z-0 hidden md:block h-full w-full absolute" frameborder="0" scrolling="no" src="https://dq.ct8.pl/ad.html" id="wallpaper-frame"></iframe>
     <header class="hidden sm:block z-10">
         <ul class="lightrope">
             <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
@@ -64,6 +50,7 @@
         <a href="/terms" class="text-blue-200">Terms of Service</a> | <a href="/privacy" class="text-blue-200">Privacy Policy</a> | <a href="https://github.com/disk-dog" class="text-blue-200">GitHub</a>
     </footer>
     <script src="/assets/api.js"></script>
+    <script src="/assets/_manager.js"></script>
     <script>
         function confirmation_prompt() {
             let _file = $("#uploader").get(0).files[0];
