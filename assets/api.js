@@ -28,18 +28,39 @@ function createChunks(file) {
     return chunks
 }
 
-async function uploadChunk(url, chunk) {
+async function uploadChunk(url, data) {
     let chunkProgress = 0
 
     return await axios({
         url,
+        data,
         method: 'PUT',
-        data: chunk,
         onUploadProgress: async(progressEvent) => {
             fileProgress += progressEvent.loaded - chunkProgress
             chunkProgress += progressEvent.loaded - chunkProgress
         }
     }).then(console.log).then(() => console.log("Chunk uploaded successfully.")).catch(console.error)
+}
+
+function createFile(name, password, parts, expire) {
+    return axios.post(`${endpoint}/createFile`, {
+        name,
+        password,
+        parts,
+        expire
+    }).then(x => Object.assign({ success: true }, x.data)).catch(error => {
+        console.error(error);
+        return Object.assign({ success: false }, error.response);
+    });
+}
+
+function completeFile(code) {
+    return axios.post(`${endpoint}/completeFile`, {
+        code
+    }).then(x => Object.assign({ success: true }, x.data)).catch(error => {
+        console.error(error);
+        return Object.assign({ success: false }, error.response);
+    });
 }
 
 async function handleUpload(file) {
@@ -88,24 +109,4 @@ async function handleUpload(file) {
     $("#uploading_screen").addClass("hidden");
 
     $("#done_input").val(`${id.slice(0, 2)} ${id.slice(2, 6)} ${id.slice(6, 10)}`);
-}
-
-function error(message) {
-    alert(message);
-}
-
-async function handleDownloadSubmit() {
-    let code = prompt("Enter the code of the file you want to download.").replace(/\s/g, "");
-    let response = await axios.get(`/download?code=${code}`).then(x => x.status).catch(e => e.response.status);
-
-    if(response === 200) {
-        window.location.href = `/download?code=${code}`
-    } else if(response === 404) {
-        alert('Drop does not exist!')
-    } else if(response === 401) {
-        let pass = prompt("This file requires password, please provide it below and press enter.");
-        response = await axios.get(`/download?code=${code}&password=${pass}`).then(x => x.status).catch(e => e.response.status);
-        if(response === 401) return alert("Invalid password provided.");
-        window.location.href = `/download?code=${code}&password=${pass}`;
-    }
 }
